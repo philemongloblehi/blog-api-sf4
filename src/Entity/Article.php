@@ -24,7 +24,7 @@ class Article
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Serializer\Groups({"details", {"list"}})
+     * @Serializer\Groups({"details", "list"})
      */
     private $title;
 
@@ -34,6 +34,11 @@ class Article
      * @Serializer\Groups({"details", "list"})
      */
     private $content;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Author::class, inversedBy="articles")
+     */
+    private $author;
 
     public function getId(): ?int
     {
@@ -60,6 +65,18 @@ class Article
     public function setContent(string $content): self
     {
         $this->content = $content;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?Author $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
